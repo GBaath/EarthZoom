@@ -54,7 +54,7 @@ public class CameraZoom : MonoBehaviour
                 {
                     foreach(Camera cam in cams)
                     {
-                        cam.fieldOfView = 0.1f;
+                        cam.fieldOfView = ZoomMinBound;
                     }
                 }
                 else
@@ -62,7 +62,7 @@ public class CameraZoom : MonoBehaviour
                 {
                     foreach (Camera cam in cams)
                     {
-                        cam.fieldOfView = 179.9f;
+                        cam.fieldOfView = ZoomMaxBound;
                     }
                 }
             }

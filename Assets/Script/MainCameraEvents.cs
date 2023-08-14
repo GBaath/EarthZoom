@@ -7,6 +7,8 @@ public class MainCamera : MonoBehaviour
     public static MainCamera instance;
 
     public MapTransitionManager transitionManager;
+    [SerializeField] private ParticleSystem cloudsIn, cloudsOut;
+    [SerializeField] private Animator animator;
 
 
     private void Start()
@@ -22,10 +24,16 @@ public class MainCamera : MonoBehaviour
 
     public void ZoomIn()
     {
-
+        cloudsIn.Play();
+        animator.Play("CameraZoomIn");
+    }
+    public void FinishZoomiIn()
+    {
+        cloudsIn.Play();
+        animator.Play("CameraFinishZoomIn");
     }
     public void ZoomOut()
     {
-
+        cloudsOut.Play();
     }
 }

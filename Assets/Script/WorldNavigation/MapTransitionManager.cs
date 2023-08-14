@@ -12,6 +12,7 @@ public class MapTransitionManager : MonoBehaviour, IRecieveEvents
     float normalizedZoomLimit = .3f; //what is need normalized point to middle to zoom in? 0,0 -> 1,1
 
     public List<ZoomPoint> zoomPoints;
+    ZoomPoint zoomInPoint;
 
     private void Start()
     {
@@ -60,18 +61,26 @@ public class MapTransitionManager : MonoBehaviour, IRecieveEvents
             }
         }
 
-        ZoomPoint zoomInPoint = zoomPoints[index];
+        zoomInPoint = zoomPoints[index];
 
+        MainCamera.instance.ZoomIn();
+        Invoke(nameof(InvokeZoomIn),1);
+
+    }
+
+
+    private void InvokeZoomIn()
+    {
+        MainCamera.instance.ZoomIn();
         try
         {
             SceneManager.LoadSceneAsync(zoomInPoint.zoomInSceneName);
-
+            zoomInPoint = null;
         }
         catch
         {
             SceneManager.LoadScene("WorldMap");
         }
-
     }
 
     public void EventSubscribe()
