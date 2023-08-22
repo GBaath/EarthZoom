@@ -14,23 +14,42 @@ public class MainCamera : MonoBehaviour
     private void Start()
     {
         if (instance)
-            Destroy(gameObject);
+        {
+            Destroy(this);
+            return;
+        }
 
         instance = this;
+        ApplyStartValues();
 
-        DontDestroyOnLoad(instance.gameObject);
     }
+    private void ApplyStartValues()
+    {
+        Debug.Log(GameManager.cameraProperties.beginSceneZoomFX);
 
+        switch (GameManager.cameraProperties.beginSceneZoomFX)
+        {
+            case GameManager.CameraProperties.BeginSceneZoomEffect.no:
+                break;
+            case GameManager.CameraProperties.BeginSceneZoomEffect.zoomInEnd:
+                FinishZoomiIn();
+                break;
+            case GameManager.CameraProperties.BeginSceneZoomEffect.zoomOutEnd:
+                break;
+        }
+    }
 
     public void ZoomIn()
     {
         cloudsIn.Play();
         animator.Play("CameraZoomIn");
+        GameManager.cameraProperties.beginSceneZoomFX = GameManager.CameraProperties.BeginSceneZoomEffect.zoomInEnd;
     }
     public void FinishZoomiIn()
     {
         cloudsIn.Play();
         animator.Play("CameraFinishZoomIn");
+        GameManager.cameraProperties.beginSceneZoomFX = GameManager.CameraProperties.BeginSceneZoomEffect.no;
     }
     public void ZoomOut()
     {

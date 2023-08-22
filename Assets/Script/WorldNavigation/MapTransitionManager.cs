@@ -76,6 +76,7 @@ public class MapTransitionManager : MonoBehaviour, IRecieveEvents
         {
             SceneManager.LoadSceneAsync(zoomInPoint.zoomInSceneName);
             zoomInPoint = null;
+            zoomPoints.Clear();
         }
         catch
         {

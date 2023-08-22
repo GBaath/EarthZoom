@@ -6,14 +6,28 @@ public class GameManager: MonoBehaviour
 {
     public static GameManager instance;
 
+    public struct CameraProperties
+    {
+        public enum BeginSceneZoomEffect
+        {
+            no, zoomInEnd, zoomOutEnd
+        }
+        public BeginSceneZoomEffect beginSceneZoomFX;
+
+    }
+    public static CameraProperties cameraProperties;
+
     private void Start()
     {
-        if (GameManager.instance)
-            Destroy(gameObject);
+        if (instance)
+            Destroy(this);
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(instance);
+        }
 
-        instance = this;
 
-        DontDestroyOnLoad(instance.gameObject);
     }
 
 }
