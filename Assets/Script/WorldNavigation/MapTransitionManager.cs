@@ -6,23 +6,29 @@ using UnityEngine.SceneManagement;
 
 public class MapTransitionManager : MonoBehaviour, IRecieveEvents
 {
+    public List<ZoomPoint> zoomPoints;
 
     Camera cam;
+    ZoomPoint zoomInPoint;
+
+    GameManager.SceneInfo sceneInfoSend;
 
     float normalizedZoomLimit = .3f; //what is need normalized point to middle to zoom in? 0,0 -> 1,1
 
-    public List<ZoomPoint> zoomPoints;
-    ZoomPoint zoomInPoint;
+    bool loadingTransition;
 
+    public const string namoOfWorldMap = "WorldMap";
     private void Start()
     {
         cam = Camera.main;
 
         EventSubscribe();
+
+        loadingTransition = false;
     }
 
     //call when zoomed in enough to check if scene transition
-    public void ZoomToGroundCheck()
+    void ZoomToGroundCheck()
     {
         if (!(CameraZoom.instance.zoomScale < .2f)) //only check transition while zoomed in
             return;
@@ -49,8 +55,8 @@ public class MapTransitionManager : MonoBehaviour, IRecieveEvents
         if (pointsAndMagnitude.Count < 1)
             return;
 
-        //fin zoompoint closest to middle of screen
-        float closest = 999;
+        //find zoompoint closest to middle of screen
+        float closest = float.PositiveInfinity;
         int index = 0;
         foreach(Vector2 point in pointsAndMagnitude) 
         {
@@ -63,30 +69,58 @@ public class MapTransitionManager : MonoBehaviour, IRecieveEvents
 
         zoomInPoint = zoomPoints[index];
 
-        MainCamera.instance.ZoomIn();
-        Invoke(nameof(InvokeZoomIn),1);
+        if (loadingTransition)
+            return;
+        loadingTransition = true;
 
+        MainCamera.instance.ZoomInToPoint();
+        //start loading after animation
+        Invoke(nameof(InvokeZoomIn),1);
+    }
+
+    void ZoomOutCheck()
+    {
+        if (!(CameraZoom.instance.zoomScale > .9f)) //only check transition while zoomed in
+            return;
+        if (SceneManager.GetActiveScene().name == namoOfWorldMap)
+            return;
+
+        if (loadingTransition)
+            return;
+        loadingTransition = true;
+
+        MainCamera.instance.ZoomOutMap();
+        Invoke(nameof(InvokeZoomOut), 1);
     }
 
 
     private void InvokeZoomIn()
     {
-        MainCamera.instance.ZoomIn();
-        try
-        {
-            SceneManager.LoadSceneAsync(zoomInPoint.zoomInSceneName);
-            zoomInPoint = null;
-            zoomPoints.Clear();
-        }
-        catch
-        {
-            SceneManager.LoadScene("WorldMap");
-        }
+        sceneInfoSend.zoomOutSceneName = SceneManager.GetActiveScene().name;
+        GameManager.instance.SetCurrentSceneInfo(sceneInfoSend);
+
+        EventHandler.instance.Call(EventHandler.EventType.sceneSwitch);
+
+        SceneManager.LoadSceneAsync(zoomInPoint.zoomInSceneName);
+        zoomPoints.Clear();
+        zoomInPoint = null;
+
     }
+    private void InvokeZoomOut()
+    {
+        GameManager.SceneInfo info;
+        GameManager.instance.GetCurrentSceneInfo(out info);
+
+        EventHandler.instance.Call(EventHandler.EventType.sceneSwitch);
+
+        SceneManager.LoadSceneAsync(info.zoomOutSceneName);
+
+    }
+
 
     public void EventSubscribe()
     {
-        EventHandler.instance.Add(this);
+        EventHandler.instance.AddReciever(this);
     }
 
     public void EventCall(EventHandler.EventType type)
@@ -96,8 +130,11 @@ public class MapTransitionManager : MonoBehaviour, IRecieveEvents
             case EventHandler.EventType.zoomIn:
                 ZoomToGroundCheck();
                 break;
-
-            default: break;
+            case EventHandler.EventType.zoomOut:
+                ZoomOutCheck();
+                break;
+            default: 
+                break;
         }
     }
 }

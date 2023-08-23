@@ -7,8 +7,13 @@ public class MainCamera : MonoBehaviour
     public static MainCamera instance;
 
     public MapTransitionManager transitionManager;
-    [SerializeField] private ParticleSystem cloudsIn, cloudsOut;
+    [SerializeField] private ParticleSystem cloudsIn;
     [SerializeField] private Animator animator;
+
+    const string zoomIn = "CameraZoomIn";
+    const string zoomInFinish = "CameraFinishZoomIn";
+    const string zoomOut = "CameraZoomOut";
+    const string zoomOutFinish = "CameraFinishZoomOut";
 
 
     private void Start()
@@ -25,7 +30,6 @@ public class MainCamera : MonoBehaviour
     }
     private void ApplyStartValues()
     {
-        Debug.Log(GameManager.cameraProperties.beginSceneZoomFX);
 
         switch (GameManager.cameraProperties.beginSceneZoomFX)
         {
@@ -35,24 +39,32 @@ public class MainCamera : MonoBehaviour
                 FinishZoomiIn();
                 break;
             case GameManager.CameraProperties.BeginSceneZoomEffect.zoomOutEnd:
+                FinishZoomOut();
                 break;
         }
     }
 
-    public void ZoomIn()
+    //Set properties in manager to play on scene enter & play outro cam anim
+    public void ZoomInToPoint()
     {
         cloudsIn.Play();
-        animator.Play("CameraZoomIn");
+        animator.Play(zoomIn);
         GameManager.cameraProperties.beginSceneZoomFX = GameManager.CameraProperties.BeginSceneZoomEffect.zoomInEnd;
     }
-    public void FinishZoomiIn()
+    void FinishZoomiIn()
     {
         cloudsIn.Play();
-        animator.Play("CameraFinishZoomIn");
+        animator.Play(zoomInFinish);
         GameManager.cameraProperties.beginSceneZoomFX = GameManager.CameraProperties.BeginSceneZoomEffect.no;
     }
-    public void ZoomOut()
+    public void ZoomOutMap()
     {
-        cloudsOut.Play();
+        animator.Play(zoomOut);
+        GameManager.cameraProperties.beginSceneZoomFX = GameManager.CameraProperties.BeginSceneZoomEffect.zoomOutEnd;
+    }
+    void FinishZoomOut()
+    {
+        animator.Play(zoomOutFinish);
+        GameManager.cameraProperties.beginSceneZoomFX = GameManager.CameraProperties.BeginSceneZoomEffect.no;
     }
 }

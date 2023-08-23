@@ -9,18 +9,18 @@ public class EventHandler : MonoBehaviour
     private List<IRecieveEvents> recievers = new List<IRecieveEvents>();
     public enum EventType
     {
-        zoomIn, zoomOut
+        zoomIn, zoomOut, sceneSwitch
     }
     private void Awake()
     {
         instance = this;
     }
 
-    public void Add(IRecieveEvents reciever)
+    public void AddReciever(IRecieveEvents reciever)
     {
         recievers.Add(reciever);
     }
-    public void Remove(IRecieveEvents reciever)
+    public void RemoveReciever(IRecieveEvents reciever)
     {
         if(recievers.Contains(reciever))
             recievers.Remove(reciever);

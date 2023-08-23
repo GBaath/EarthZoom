@@ -575,7 +575,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 605ce4df7b4a3414c953f1f61bee85f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zoomInSceneName: WorldMap
+  zoomInSceneName: LocalMap1
 --- !u!114 &1434233024
 MonoBehaviour:
   m_ObjectHideFlags: 0
