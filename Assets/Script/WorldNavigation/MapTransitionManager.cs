@@ -11,7 +11,7 @@ public class MapTransitionManager : MonoBehaviour, IRecieveEvents
     Camera cam;
     ZoomPoint zoomInPoint;
 
-    GameManager.SceneInfo sceneInfoSend;
+    //GameManager.SceneInfoStruct sceneInfoSend;
 
     float normalizedZoomLimit = .3f; //what is need normalized point to middle to zoom in? 0,0 -> 1,1
 
@@ -96,8 +96,8 @@ public class MapTransitionManager : MonoBehaviour, IRecieveEvents
 
     private void InvokeZoomIn()
     {
-        sceneInfoSend.zoomOutSceneName = SceneManager.GetActiveScene().name;
-        GameManager.instance.SetCurrentSceneInfo(sceneInfoSend);
+      //  sceneInfoSend.zoomOutSceneName = SceneManager.GetActiveScene().name;
+        //GameManager.instance.SetCurrentSceneInfo(sceneInfoSend);
 
         EventHandler.instance.Call(EventHandler.EventType.sceneSwitch);
 
@@ -108,7 +108,7 @@ public class MapTransitionManager : MonoBehaviour, IRecieveEvents
     }
     private void InvokeZoomOut()
     {
-        GameManager.SceneInfo info;
+        SceneInfo info;
         GameManager.instance.GetCurrentSceneInfo(out info);
 
         EventHandler.instance.Call(EventHandler.EventType.sceneSwitch);

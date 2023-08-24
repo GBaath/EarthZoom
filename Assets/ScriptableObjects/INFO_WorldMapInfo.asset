@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5261c52778307748951055ae92bdd5e, type: 3}
+  m_Name: INFO_WorldMapInfo
+  m_EditorClassIdentifier: 
+  cameraMovementEnabled: 0
+  zoomOutSceneName: 
+  currentPlanetOrientation: {x: 353.42374, y: 10.230332, z: 359.93204}
+  planet: {fileID: 0}
+  findPlanet: 1
