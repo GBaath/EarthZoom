@@ -13,14 +13,13 @@ public class CameraZoom : MonoBehaviour
     float ZoomMinBound = 13f;
     float ZoomMaxBound = 70f;
 
+
+
+    float oldAngle;
+
     [SerializeField] List<Camera> cams;
     private void Start()
     {
-        //cams[0] = GetComponent<Camera>();
-        //foreach (Camera cam in GetComponentsInChildren<Camera>())
-        //{
-        //    cams.Add(cam);
-        //}
 
         instance = this;
     }
@@ -64,6 +63,22 @@ public class CameraZoom : MonoBehaviour
                     {
                         cam.fieldOfView = ZoomMaxBound;
                     }
+                }
+
+
+
+
+
+
+                var v2 = Input.GetTouch(0).position - Input.GetTouch(1).position;
+                var newAngle = Mathf.Atan2(v2.y, v2.x);
+                var deltaAngle = Mathf.DeltaAngle(newAngle, oldAngle);
+                oldAngle = newAngle;
+
+
+                foreach (Camera cam in cams)
+                {
+                    cam.transform.localRotation = Quaternion.AngleAxis(deltaAngle, transform.forward);
                 }
             }
         }

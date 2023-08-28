@@ -8,6 +8,18 @@ public class SceneStart : MonoBehaviour
 
     private void Start()
     {
+        if (!GameManager.instance)
+        {
+            GameObject go = (new GameObject("GameManager"));
+            GameManager gm = go.AddComponent<GameManager>();
+            go.AddComponent<EventHandler>();
+
+            GameManager.instance = gm;
+        }
+
+
+
+
         if (SceneInfo.findPlanet)
         {
             try

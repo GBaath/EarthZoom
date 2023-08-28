@@ -25,8 +25,11 @@ public class GameManager: MonoBehaviour, IRecieveEvents
 
     private void Start()
     {
-        if (instance)
+        if (instance != this)
+        {
             Destroy(this);
+            Destroy(gameObject);
+        }
         else
         {
             instance = this;

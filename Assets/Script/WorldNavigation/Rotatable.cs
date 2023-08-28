@@ -10,8 +10,10 @@ public class Rotatable : MonoBehaviour
     
     
     
-    bool draglock = false;
+    public bool draglock = false;
     bool isDragging = false;
+
+    float oldAngle;
     
     Rigidbody rb;
 
@@ -37,9 +39,6 @@ public class Rotatable : MonoBehaviour
         //scaling with zoom level
         rotSpeedScale = camZoom.zoomScale;
 
-        
-
-
     }
     private void FixedUpdate()
     {
@@ -55,7 +54,9 @@ public class Rotatable : MonoBehaviour
 
         rb.AddTorque(Vector3.down * x);
         rb.AddTorque(Vector3.right * y);
+
     }
+
 
 
 }
