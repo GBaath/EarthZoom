@@ -5214,6 +5214,7 @@ GameObject:
   - component: {fileID: 5890395375051926665}
   - component: {fileID: 2992464120312516610}
   - component: {fileID: 1789900858720931950}
+  - component: {fileID: 6169931266861039247}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5385,6 +5386,19 @@ MonoBehaviour:
   transitionManager: {fileID: 5890395375051926665}
   cloudsIn: {fileID: 3536397436387959325}
   animator: {fileID: 6035587015387528271}
+  draglock: 0
+--- !u!114 &6169931266861039247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7965056792499857236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00e05d0caaf964046abd6d17b0def6ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8777859245897542679
 GameObject:
   m_ObjectHideFlags: 0
