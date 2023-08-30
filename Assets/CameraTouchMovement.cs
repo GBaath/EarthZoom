@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI.Table;
 
 public class CameraTouchMovement : MonoBehaviour
 {
-    private CameraZoom camZoom;
+    MainCamera mainCam;
 
     private bool moveEnabled;
     public bool draglock = false;
@@ -19,15 +18,21 @@ public class CameraTouchMovement : MonoBehaviour
 
     private float inputx,inputy;
 
-    [SerializeField]private Vector3 defaultRot;
+    public Vector3 defaultRot;
 
     private void Start()
-    {        
-        camZoom = GetComponent<CameraZoom>();
+    {
+        //camZoom = MainCamera.instance.camZoom;
+        mainCam = MainCamera.instance;
         moveEnabled = GameManager.instance.sceneInfo.cameraMovementEnabled;
 
+        ResetDefaultRotation();
+    }
+    public void ResetDefaultRotation()
+    {
         defaultRot = transform.root.localEulerAngles;
     }
+
     private void Update()
     {
         isDragging = Input.GetMouseButton(0);
@@ -40,7 +45,7 @@ public class CameraTouchMovement : MonoBehaviour
         if (!draglock)
             CameraMove(inputx,inputy);
 
-        AngleLerpToSoftLimit();
+        //AngleLerpToSoftLimit();
     }
     private void CameraMove(float inX, float inY)
     {
@@ -51,18 +56,28 @@ public class CameraTouchMovement : MonoBehaviour
         if (!isDragging) return;
 
 
-        float oldX = transform.root.localEulerAngles.x;
-        float oldY = transform.root.localEulerAngles.y;
 
+        float oldX = MathG.AngleCorrectionNegative(transform.root.localEulerAngles.x);
+        float oldY = MathG.AngleCorrectionNegative(transform.root.localEulerAngles.y);
 
+        Vector2 vectorFromDefRot = new Vector2(oldX - defaultRot.x, oldY - defaultRot.y);
 
-        float y =  inX * -dragSpeed * camZoom.zoomScale * Time.fixedDeltaTime;
-        float x =  inY * dragSpeed * camZoom.zoomScale * Time.fixedDeltaTime;
+        //if(oldY < defaultRot.x-angleSoftLimit)
+        //    inX -= (1 / (angleHardLimit - angleSoftLimit));
+        //else if(oldY > defaultRot.x+angleSoftLimit)
+        //    inX += (1/ (angleHardLimit-angleSoftLimit));
+
+        //Debug.Log(inX);
+        
+
+        float y =  inX * -dragSpeed * mainCam.camZoom.zoomScale * Time.fixedDeltaTime;
+        float x =  inY * dragSpeed * mainCam.camZoom.zoomScale * Time.fixedDeltaTime;
 
 
         //unity funny eulerangle has no -values
         float newX = MathG.AngleClampNegative(oldX + x, -angleHardLimit + defaultRot.x, angleHardLimit + defaultRot.x);
         float newY = MathG.AngleClampNegative(oldY + y, -angleHardLimit + defaultRot.y, angleHardLimit + defaultRot.y);
+
 
 
         Vector3 newRot = new Vector3(newX, newY, 0);
@@ -89,7 +104,7 @@ public class CameraTouchMovement : MonoBehaviour
         lerpSpeed = new Vector2(x, y).magnitude / new Vector2(defaultRot.x+x, defaultRot.y+y).magnitude;
         //lerpSpeed += angleSoftLimit / angleHardLimit;
 
-        transform.root.rotation = Quaternion.Lerp(Quaternion.Euler(transform.root.localEulerAngles), Quaternion.Euler(defaultRot), lerpSpeed);
+        transform.root.rotation = Quaternion.Lerp(Quaternion.Euler(transform.root.localEulerAngles), Quaternion.Euler(defaultRot), lerpSpeed * Time.fixedDeltaTime);
 
 
         //transform.root.localEulerAngles = new Vector3 (newX, newY, 0);

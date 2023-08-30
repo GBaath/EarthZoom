@@ -10,6 +10,9 @@ public class MainCamera : MonoBehaviour
     [SerializeField] private ParticleSystem cloudsIn;
     [SerializeField] private Animator animator;
 
+    public CameraZoom camZoom;
+    public CameraTouchMovement cameraTouchMovement;
+
 
     const string zoomIn = "CameraZoomIn";
     const string zoomInFinish = "CameraFinishZoomIn";
@@ -43,6 +46,10 @@ public class MainCamera : MonoBehaviour
                 FinishZoomOut();
                 break;
         }
+
+        camZoom = GetComponent<CameraZoom>();
+        cameraTouchMovement = GetComponent<CameraTouchMovement>();
+
     }
 
     //Set properties in manager to play on scene enter & play outro cam anim

@@ -13,6 +13,8 @@ public class CameraZoom : MonoBehaviour
     float ZoomMinBound = 13f;
     float ZoomMaxBound = 70f;
 
+    float xAngleMaxZoom = 20;
+    float defaultZoomAngle;
 
 
     float oldAngle;
@@ -22,6 +24,8 @@ public class CameraZoom : MonoBehaviour
     {
 
         instance = this;
+
+        defaultZoomAngle = transform.root.localEulerAngles.x;
     }
     private void Update()
     {
@@ -47,39 +51,6 @@ public class CameraZoom : MonoBehaviour
                 Zoom(deltaDistance, TouchZoomSpeed);
 
 
-
-
-                if (cams[0].fieldOfView < ZoomMinBound)
-                {
-                    foreach(Camera cam in cams)
-                    {
-                        cam.fieldOfView = ZoomMinBound;
-                    }
-                }
-                else
-                if (cams[0].fieldOfView > ZoomMaxBound)
-                {
-                    foreach (Camera cam in cams)
-                    {
-                        cam.fieldOfView = ZoomMaxBound;
-                    }
-                }
-
-
-
-
-
-
-                var v2 = Input.GetTouch(0).position - Input.GetTouch(1).position;
-                var newAngle = Mathf.Atan2(v2.y, v2.x);
-                var deltaAngle = Mathf.DeltaAngle(newAngle, oldAngle);
-                oldAngle = newAngle;
-
-
-                foreach (Camera cam in cams)
-                {
-                    cam.transform.localRotation = Quaternion.AngleAxis(deltaAngle, transform.forward);
-                }
             }
         }
         else
@@ -89,7 +60,29 @@ public class CameraZoom : MonoBehaviour
             Zoom(-scroll, MouseZoomSpeed);
         }
 
+        //clamping
+        if (cams[0].fieldOfView < ZoomMinBound)
+        {
+            foreach(Camera cam in cams)
+            {
+                cam.fieldOfView = ZoomMinBound;
+            }
+        }
+        else
+        if (cams[0].fieldOfView > ZoomMaxBound)
+        {
+            foreach (Camera cam in cams)
+            {
+                cam.fieldOfView = ZoomMaxBound;
+            }
+        }
+
         zoomScale = cams[0].fieldOfView / ZoomMaxBound;
+
+
+        if (!GameManager.instance.sceneInfo.cameraMovementEnabled)
+            return;
+
     }
     void Zoom(float deltaMagnitudeDiff, float speed)
     {
@@ -105,5 +98,17 @@ public class CameraZoom : MonoBehaviour
             EventHandler.instance.Call(EventHandler.EventType.zoomIn);
         else
             EventHandler.instance.Call(EventHandler.EventType.zoomOut);
+
+        //SetZoomAngle(); BROKEN
+    }
+    void SetZoomAngle()
+    {
+        Vector3 v = MainCamera.instance.cameraTouchMovement.defaultRot;
+
+        float newXAngle = defaultZoomAngle - (zoomScale * xAngleMaxZoom) + v.x;
+        Debug.Log(newXAngle);
+
+        transform.root.localEulerAngles = new Vector3 (newXAngle, v.y, v.z);
+        MainCamera.instance.cameraTouchMovement.ResetDefaultRotation();
     }
 }
