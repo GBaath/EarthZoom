@@ -8,6 +8,8 @@ public class BillBoard : MonoBehaviour
     public bool lockRotationXZ = false;
     public bool fliptoPlayer = false;
 
+    private Vector3 startScale;
+
 
     private SpriteRenderer sr;
 
@@ -21,6 +23,8 @@ public class BillBoard : MonoBehaviour
         if (!constantScale)
             return;
 
+        startScale = transform.localScale;
+        
     }
 
     void Update()
@@ -54,7 +58,7 @@ public class BillBoard : MonoBehaviour
 
         if (constantScale)
         {
-            transform.localScale = Vector3.one * (CameraZoom.instance.zoomScale);
+            transform.localScale = (startScale * (1+CameraZoom.instance.defaultScalingFactor)) * (CameraZoom.instance.zoomScale);
         }
     }
 }

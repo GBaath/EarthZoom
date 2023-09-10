@@ -15,6 +15,7 @@ public class CameraZoom : MonoBehaviour
 
     float xAngleMaxZoom = 20;
     float defaultZoomAngle;
+    [HideInInspector] public float defaultScalingFactor;
 
 
     float oldAngle;
@@ -26,6 +27,8 @@ public class CameraZoom : MonoBehaviour
         instance = this;
 
         defaultZoomAngle = transform.root.localEulerAngles.x;
+
+        defaultScalingFactor = 1- (Camera.main.fieldOfView / ZoomMaxBound);
     }
     private void Update()
     {

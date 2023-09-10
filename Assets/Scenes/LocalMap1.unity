@@ -521,7 +521,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   constantScale: 1
-  lockRotationXZ: 1
+  lockRotationXZ: 0
   fliptoPlayer: 1
 --- !u!212 &1911209928
 SpriteRenderer:
