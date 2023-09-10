@@ -11,14 +11,14 @@ public class CameraTouchMovement : MonoBehaviour
     public bool draglock = false;
     bool isDragging = false;
 
-    public float dragSpeed = 250;
-    public float angleSoftLimit = 10;
-    public float angleHardLimit = 20;
+    public float dragSpeed = 25;
+    public float posSoftLimit = 10;
+    public float posHardLimit = 20;
     [SerializeField]float lerpSpeed;
 
     private float inputx,inputy;
 
-    public Vector3 defaultRot;
+    public Vector3 defaultPos;
 
     private void Start()
     {
@@ -30,7 +30,7 @@ public class CameraTouchMovement : MonoBehaviour
     }
     public void ResetDefaultRotation()
     {
-        defaultRot = transform.root.localEulerAngles;
+        defaultPos = transform.root.position;//localEulerAngles;
     }
 
     private void Update()
@@ -53,14 +53,15 @@ public class CameraTouchMovement : MonoBehaviour
             return;
 
 
-        if (!isDragging) return;
+        if (!isDragging) 
+            return;
 
 
 
-        float oldX = MathG.AngleCorrectionNegative(transform.root.localEulerAngles.x);
-        float oldY = MathG.AngleCorrectionNegative(transform.root.localEulerAngles.y);
+        float oldX = transform.root.position.x;//MathG.AngleCorrectionNegative(transform.root.localEulerAngles.x);
+        float oldY = transform.root.position.y;//MathG.AngleCorrectionNegative(transform.root.localEulerAngles.y);
 
-        Vector2 vectorFromDefRot = new Vector2(oldX - defaultRot.x, oldY - defaultRot.y);
+        Vector2 vectorFromDefPos = new Vector2(oldX - defaultPos.x, oldY - defaultPos.y);
 
         //if(oldY < defaultRot.x-angleSoftLimit)
         //    inX -= (1 / (angleHardLimit - angleSoftLimit));
@@ -70,20 +71,20 @@ public class CameraTouchMovement : MonoBehaviour
         //Debug.Log(inX);
         
 
-        float y =  inX * -dragSpeed * mainCam.camZoom.zoomScale * Time.fixedDeltaTime;
-        float x =  inY * dragSpeed * mainCam.camZoom.zoomScale * Time.fixedDeltaTime;
+        float x =  inX * -dragSpeed * mainCam.camZoom.zoomScale * Time.fixedDeltaTime;
+        float y =  inY * -dragSpeed * mainCam.camZoom.zoomScale * Time.fixedDeltaTime;
 
 
         //unity funny eulerangle has no -values
-        float newX = MathG.AngleClampNegative(oldX + x, -angleHardLimit + defaultRot.x, angleHardLimit + defaultRot.x);
-        float newY = MathG.AngleClampNegative(oldY + y, -angleHardLimit + defaultRot.y, angleHardLimit + defaultRot.y);
+        float newX = Mathf.Clamp(oldX + x, -posHardLimit + defaultPos.x, posHardLimit + defaultPos.x);
+        float newY = Mathf.Clamp(oldY + y, -posHardLimit + defaultPos.y, posHardLimit + defaultPos.y);
 
 
 
-        Vector3 newRot = new Vector3(newX, newY, 0);
+        Vector3 newPos = new Vector3(newX, newY, transform.root.position.z);
 
 
-        transform.root.localEulerAngles = newRot;
+        transform.root.transform.position = newPos;
     }
 
     private void AngleLerpToSoftLimit()
@@ -93,18 +94,18 @@ public class CameraTouchMovement : MonoBehaviour
 
 
         //is beyond lerpLimit shit dont work
-        bool lerpX = x > angleSoftLimit+defaultRot.x || x < -angleSoftLimit+defaultRot.x;
-        bool lerpY = y > angleSoftLimit+defaultRot.y || y < -angleSoftLimit+defaultRot.y;
+        bool lerpX = x > posSoftLimit+defaultPos.x || x < -posSoftLimit+defaultPos.x;
+        bool lerpY = y > posSoftLimit+defaultPos.y || y < -posSoftLimit+defaultPos.y;
 
 
 
         if (!lerpY && !lerpX)
             return;
 
-        lerpSpeed = new Vector2(x, y).magnitude / new Vector2(defaultRot.x+x, defaultRot.y+y).magnitude;
+        lerpSpeed = new Vector2(x, y).magnitude / new Vector2(defaultPos.x+x, defaultPos.y+y).magnitude;
         //lerpSpeed += angleSoftLimit / angleHardLimit;
 
-        transform.root.rotation = Quaternion.Lerp(Quaternion.Euler(transform.root.localEulerAngles), Quaternion.Euler(defaultRot), lerpSpeed * Time.fixedDeltaTime);
+        transform.root.rotation = Quaternion.Lerp(Quaternion.Euler(transform.root.localEulerAngles), Quaternion.Euler(defaultPos), lerpSpeed * Time.fixedDeltaTime);
 
 
         //transform.root.localEulerAngles = new Vector3 (newX, newY, 0);

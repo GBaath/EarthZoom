@@ -12,6 +12,7 @@ public class ZoomPoint : MonoBehaviour
 
     private void Start()
     {
-        MainCamera.instance.transitionManager.zoomPoints.Add(this);
+        if(!MainCamera.instance.transitionManager.zoomPoints.Contains(this))
+            MainCamera.instance.transitionManager.zoomPoints.Add(this);
     }
 }

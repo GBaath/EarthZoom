@@ -354,7 +354,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &626318059
+--- !u!1001 &602703417
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -362,62 +362,62 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1789900858720931950, guid: ed7d37bd0d88ded4782f463cbf952b7c,
+    - target: {fileID: 3532363580249794675, guid: d37a2eb39abfe8149ab12b5682e0284b,
         type: 3}
       propertyPath: dragSpeed
-      value: 100
+      value: 25
       objectReference: {fileID: 0}
-    - target: {fileID: 1970413869490093395, guid: ed7d37bd0d88ded4782f463cbf952b7c,
+    - target: {fileID: 6968029874635068388, guid: d37a2eb39abfe8149ab12b5682e0284b,
         type: 3}
       propertyPath: m_Name
-      value: Camera Holder
+      value: CameraRoot
       objectReference: {fileID: 0}
-    - target: {fileID: 7953196766349742451, guid: ed7d37bd0d88ded4782f463cbf952b7c,
+    - target: {fileID: 7969800318311676203, guid: d37a2eb39abfe8149ab12b5682e0284b,
         type: 3}
       propertyPath: m_LocalPosition.x
       value: -19
       objectReference: {fileID: 0}
-    - target: {fileID: 7953196766349742451, guid: ed7d37bd0d88ded4782f463cbf952b7c,
+    - target: {fileID: 7969800318311676203, guid: d37a2eb39abfe8149ab12b5682e0284b,
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 58
       objectReference: {fileID: 0}
-    - target: {fileID: 7953196766349742451, guid: ed7d37bd0d88ded4782f463cbf952b7c,
+    - target: {fileID: 7969800318311676203, guid: d37a2eb39abfe8149ab12b5682e0284b,
         type: 3}
       propertyPath: m_LocalPosition.z
       value: -47
       objectReference: {fileID: 0}
-    - target: {fileID: 7953196766349742451, guid: ed7d37bd0d88ded4782f463cbf952b7c,
+    - target: {fileID: 7969800318311676203, guid: d37a2eb39abfe8149ab12b5682e0284b,
         type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.92387956
       objectReference: {fileID: 0}
-    - target: {fileID: 7953196766349742451, guid: ed7d37bd0d88ded4782f463cbf952b7c,
+    - target: {fileID: 7969800318311676203, guid: d37a2eb39abfe8149ab12b5682e0284b,
         type: 3}
       propertyPath: m_LocalRotation.x
       value: 0.38268343
       objectReference: {fileID: 0}
-    - target: {fileID: 7953196766349742451, guid: ed7d37bd0d88ded4782f463cbf952b7c,
+    - target: {fileID: 7969800318311676203, guid: d37a2eb39abfe8149ab12b5682e0284b,
         type: 3}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7953196766349742451, guid: ed7d37bd0d88ded4782f463cbf952b7c,
+    - target: {fileID: 7969800318311676203, guid: d37a2eb39abfe8149ab12b5682e0284b,
         type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7953196766349742451, guid: ed7d37bd0d88ded4782f463cbf952b7c,
+    - target: {fileID: 7969800318311676203, guid: d37a2eb39abfe8149ab12b5682e0284b,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 45
       objectReference: {fileID: 0}
-    - target: {fileID: 7953196766349742451, guid: ed7d37bd0d88ded4782f463cbf952b7c,
+    - target: {fileID: 7969800318311676203, guid: d37a2eb39abfe8149ab12b5682e0284b,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7953196766349742451, guid: ed7d37bd0d88ded4782f463cbf952b7c,
+    - target: {fileID: 7969800318311676203, guid: d37a2eb39abfe8149ab12b5682e0284b,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
@@ -426,7 +426,7 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: ed7d37bd0d88ded4782f463cbf952b7c, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: d37a2eb39abfe8149ab12b5682e0284b, type: 3}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -680,7 +680,7 @@ SceneRoots:
   - {fileID: 410087041}
   - {fileID: 832575519}
   - {fileID: 317641778}
-  - {fileID: 626318059}
   - {fileID: 2136318054}
   - {fileID: 1911209929}
   - {fileID: 573904534}
+  - {fileID: 602703417}

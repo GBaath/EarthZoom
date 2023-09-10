@@ -103,7 +103,7 @@ public class CameraZoom : MonoBehaviour
     }
     void SetZoomAngle()
     {
-        Vector3 v = MainCamera.instance.cameraTouchMovement.defaultRot;
+        Vector3 v = MainCamera.instance.cameraTouchMovement.defaultPos;
 
         float newXAngle = defaultZoomAngle - (zoomScale * xAngleMaxZoom) + v.x;
         Debug.Log(newXAngle);
