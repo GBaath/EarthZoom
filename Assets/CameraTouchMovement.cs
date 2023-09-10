@@ -59,9 +59,9 @@ public class CameraTouchMovement : MonoBehaviour
 
 
         float oldX = transform.root.position.x;//MathG.AngleCorrectionNegative(transform.root.localEulerAngles.x);
-        float oldY = transform.root.position.y;//MathG.AngleCorrectionNegative(transform.root.localEulerAngles.y);
+        float oldY = transform.root.position.z;//MathG.AngleCorrectionNegative(transform.root.localEulerAngles.y);
 
-        Vector2 vectorFromDefPos = new Vector2(oldX - defaultPos.x, oldY - defaultPos.y);
+        Vector2 vectorFromDefPos = new Vector2(oldX - defaultPos.x, oldY - defaultPos.z);
 
         //if(oldY < defaultRot.x-angleSoftLimit)
         //    inX -= (1 / (angleHardLimit - angleSoftLimit));
@@ -77,11 +77,11 @@ public class CameraTouchMovement : MonoBehaviour
 
         //unity funny eulerangle has no -values
         float newX = Mathf.Clamp(oldX + x, -posHardLimit + defaultPos.x, posHardLimit + defaultPos.x);
-        float newY = Mathf.Clamp(oldY + y, -posHardLimit + defaultPos.y, posHardLimit + defaultPos.y);
+        float newY = Mathf.Clamp(oldY + y, -posHardLimit*2 + defaultPos.z, posHardLimit*2 + defaultPos.z);
 
 
 
-        Vector3 newPos = new Vector3(newX, newY, transform.root.position.z);
+        Vector3 newPos = new Vector3(newX, transform.root.position.y, newY);
 
 
         transform.root.transform.position = newPos;
@@ -95,14 +95,14 @@ public class CameraTouchMovement : MonoBehaviour
 
         //is beyond lerpLimit shit dont work
         bool lerpX = x > posSoftLimit+defaultPos.x || x < -posSoftLimit+defaultPos.x;
-        bool lerpY = y > posSoftLimit+defaultPos.y || y < -posSoftLimit+defaultPos.y;
+        bool lerpY = y > posSoftLimit+defaultPos.z || y < -posSoftLimit+defaultPos.z;
 
 
 
         if (!lerpY && !lerpX)
             return;
 
-        lerpSpeed = new Vector2(x, y).magnitude / new Vector2(defaultPos.x+x, defaultPos.y+y).magnitude;
+        lerpSpeed = new Vector2(x, y).magnitude / new Vector2(defaultPos.x+x, defaultPos.z+y).magnitude;
         //lerpSpeed += angleSoftLimit / angleHardLimit;
 
         transform.root.rotation = Quaternion.Lerp(Quaternion.Euler(transform.root.localEulerAngles), Quaternion.Euler(defaultPos), lerpSpeed * Time.fixedDeltaTime);

@@ -31,7 +31,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 537364797110944888}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: -50}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -157,6 +157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zoomPoints: []
+  cam: {fileID: 848420518160911923}
 --- !u!114 &4880140917507899844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,6 +171,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zoomScale: 0
+  defaultScalingFactor: 0
+  zoomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.02425876
+      outSlope: 0.02425876
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.29166666
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 3.1698103
+      outSlope: 3.1698103
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.041666687
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   cams:
   - {fileID: 848420518160911923}
   - {fileID: 7022308594514811165}
@@ -204,10 +230,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   draglock: 0
   dragSpeed: 250
-  angleSoftLimit: 10
-  angleHardLimit: 20
+  posSoftLimit: 10
+  posHardLimit: 20
   lerpSpeed: 0
-  defaultRot: {x: 0, y: 0, z: 0}
+  defaultPos: {x: 0, y: 0, z: 0}
 --- !u!1 &780438168708837015
 GameObject:
   m_ObjectHideFlags: 0

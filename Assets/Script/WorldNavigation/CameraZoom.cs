@@ -13,12 +13,13 @@ public class CameraZoom : MonoBehaviour
     float ZoomMinBound = 13f;
     float ZoomMaxBound = 70f;
 
-    float xAngleMaxZoom = 20;
+    float xAngleMaxZoom = -40;
     float defaultZoomAngle;
     [HideInInspector] public float defaultScalingFactor;
 
+    public AnimationCurve zoomCurve;
 
-    float oldAngle;
+    
 
     [SerializeField] List<Camera> cams;
     private void Start()
@@ -86,6 +87,8 @@ public class CameraZoom : MonoBehaviour
         if (!GameManager.instance.sceneInfo.cameraMovementEnabled)
             return;
 
+        //tilt camera if zooming in localmap scene
+        SetZoomAngle();
     }
     void Zoom(float deltaMagnitudeDiff, float speed)
     {
@@ -106,12 +109,18 @@ public class CameraZoom : MonoBehaviour
     }
     void SetZoomAngle()
     {
-        Vector3 v = MainCamera.instance.cameraTouchMovement.defaultPos;
+        float xRot = xAngleMaxZoom * zoomCurve.Evaluate(1 -zoomScale);
+
+        transform.root.GetChild(0).localEulerAngles = new Vector3 (xRot, 0, 0);
+
+
+
+        /*Vector3 v = MainCamera.instance.cameraTouchMovement.defaultPos;
 
         float newXAngle = defaultZoomAngle - (zoomScale * xAngleMaxZoom) + v.x;
         Debug.Log(newXAngle);
 
         transform.root.localEulerAngles = new Vector3 (newXAngle, v.y, v.z);
-        MainCamera.instance.cameraTouchMovement.ResetDefaultRotation();
+        MainCamera.instance.cameraTouchMovement.ResetDefaultRotation();*/
     }
 }

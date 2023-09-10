@@ -729,7 +729,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e176d0e72b46be94c86c82bc25b776f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotspeed: 1750
+  rotspeed: 1000
   draglock: 0
 --- !u!54 &1724210152
 Rigidbody:

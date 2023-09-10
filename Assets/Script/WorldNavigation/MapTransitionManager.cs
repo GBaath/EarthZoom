@@ -8,7 +8,7 @@ public class MapTransitionManager : MonoBehaviour, IRecieveEvents
 {
     public List<ZoomPoint> zoomPoints;
 
-    Camera cam;
+    [SerializeField] Camera cam;
     ZoomPoint zoomInPoint;
 
     //GameManager.SceneInfoStruct sceneInfoSend;
@@ -20,7 +20,7 @@ public class MapTransitionManager : MonoBehaviour, IRecieveEvents
     public const string namoOfWorldMap = "WorldMap";
     private void Start()
     {
-        cam = Camera.main;
+        //cam = GetComponent<Camera>();//Camera.main;
 
         EventSubscribe();
 
@@ -45,6 +45,7 @@ public class MapTransitionManager : MonoBehaviour, IRecieveEvents
             Vector2 normalizedPoint = 2*(Camera.main.WorldToScreenPoint(point.transform.position) / CamCords) - Vector2.one; //how close to screen middle (0,0)
             float zDistance = point.transform.position.z - cam.transform.position.z;
 
+            //TODO RAYCAST AND CHECK FOR TERRAIN BLOCKS
             if (normalizedPoint.magnitude < normalizedZoomLimit&&zDistance<40) //magnitude near of 0,0 //hard coded depth distance, front side of planet
             {
                 pointsAndMagnitude.Add(new Vector2(i, normalizedPoint.magnitude)); //addindex of point and its magnitude to list for comparing

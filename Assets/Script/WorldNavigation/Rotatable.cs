@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Rotatable : MonoBehaviour
 {
-    public float rotspeed = 100f;
+    public float rotspeed = 25f;
     float rotSpeedScale = 1;
     
     
